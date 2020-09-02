@@ -1,5 +1,6 @@
 import React from "react";
 import { Message } from "../domain";
+import css from "./MessageCompose.module.css";
 
 interface Props {
   onMessageSubmit: (message: Message) => void;
@@ -22,9 +23,10 @@ const MessageCompose: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={css.form}>
       <label htmlFor="message">Text</label>
       <input
+        className={css.input}
         type="text"
         name="message"
         id="message"

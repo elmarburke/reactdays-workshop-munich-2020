@@ -1,0 +1,9 @@
+.input {
+  border: 4px papayawhip solid;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
