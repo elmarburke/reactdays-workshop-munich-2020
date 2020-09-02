@@ -4,7 +4,7 @@ import { Message as MessageType } from "./domain";
 import MessageCompose from "./components/MessageCompose";
 
 const App: React.FunctionComponent = () => {
-  const messages: readonly MessageType[] = [
+  const defaultMessages: readonly MessageType[] = [
     {
       id: "1",
       author: "Elmar",
@@ -19,6 +19,14 @@ const App: React.FunctionComponent = () => {
     },
   ];
 
+  const [messages, setMessage] = React.useState<readonly MessageType[]>(
+    defaultMessages
+  );
+
+  const handleMessageSubmit = (message: MessageType) => {
+    setMessage([...messages, message]);
+  };
+
   return (
     <>
       {messages.map((message) => (
@@ -27,7 +35,7 @@ const App: React.FunctionComponent = () => {
 
       <hr />
 
-      <MessageCompose />
+      <MessageCompose onMessageSubmit={handleMessageSubmit} />
     </>
   );
 };
