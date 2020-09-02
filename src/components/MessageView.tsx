@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Message } from "../domain";
 
 const Article = styled.article`
   background-color: pink;
@@ -8,16 +9,15 @@ const Article = styled.article`
 `;
 
 interface Props {
-  opinion: string;
-  name: string;
+  message: Message;
 }
 
-const MessageView: React.FunctionComponent<Props> = ({ name, opinion }) => {
+const MessageView: React.FunctionComponent<Props> = ({ message }) => {
   return (
     <Article>
-      {opinion}
+      {message.message}
 
-      <footer>{name}</footer>
+      <footer>{message.author}</footer>
     </Article>
   );
 };

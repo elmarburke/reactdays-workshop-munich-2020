@@ -4,8 +4,22 @@ import MessageView from "./components/MessageView";
 const App = () => {
   return (
     <>
-      <MessageView name="Elmar" opinion="React is..." />
-      <MessageView name="Christan" opinion="PHP is better" />
+      <MessageView
+        message={{
+          id: "1",
+          author: "Elmar",
+          message: "React is ...",
+          date: Date.now(),
+        }}
+      />
+      <MessageView
+        message={{
+          id: "2",
+          author: "Christan",
+          message: "PHP is better",
+          date: Date.now(),
+        }}
+      />
     </>
   );
 };
