@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Message } from "../domain";
+import { Message as MessageType } from "../domain";
 
 const Article = styled.article`
   background-color: pink;
@@ -9,10 +9,10 @@ const Article = styled.article`
 `;
 
 interface Props {
-  message: Message;
+  message: MessageType;
 }
 
-const MessageView: React.FunctionComponent<Props> = ({ message }) => {
+const Message: React.FunctionComponent<Props> = ({ message }) => {
   return (
     <Article>
       {message.message}
@@ -22,4 +22,4 @@ const MessageView: React.FunctionComponent<Props> = ({ message }) => {
   );
 };
 
-export default MessageView;
+export default Message;

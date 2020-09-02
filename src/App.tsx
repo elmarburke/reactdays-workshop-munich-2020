@@ -1,10 +1,10 @@
 import React from "react";
-import MessageView from "./components/MessageView";
+import Message from "./components/MessageView";
 
 const App = () => {
   return (
     <>
-      <MessageView
+      <Message
         message={{
           id: "1",
           author: "Elmar",
@@ -12,7 +12,7 @@ const App = () => {
           date: Date.now(),
         }}
       />
-      <MessageView
+      <Message
         message={{
           id: "2",
           author: "Christan",
