@@ -1,8 +1,9 @@
 import React from "react";
 import Message from "./components/MessageView";
 import { Message as MessageType } from "./domain";
+import MessageCompose from "./components/MessageCompose";
 
-const App = () => {
+const App: React.FunctionComponent = () => {
   const messages: readonly MessageType[] = [
     {
       id: "1",
@@ -23,6 +24,10 @@ const App = () => {
       {messages.map((message) => (
         <Message key={message.id} message={message} />
       ))}
+
+      <hr />
+
+      <MessageCompose />
     </>
   );
 };
