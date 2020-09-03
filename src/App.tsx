@@ -2,9 +2,10 @@ import React from "react";
 import Message from "./components/MessageView";
 import MessageCompose from "./components/MessageCompose";
 import useMessages from "./hooks/useMessages";
+import MessageClearButton from "./components/MessageClearButton";
 
 const App: React.FunctionComponent = () => {
-  const { messages, addMessage } = useMessages();
+  const { messages, addMessage, clearMessage } = useMessages();
 
   return (
     <>
@@ -15,6 +16,8 @@ const App: React.FunctionComponent = () => {
       <hr />
 
       <MessageCompose onMessageSubmit={addMessage} />
+
+      <MessageClearButton onClear={clearMessage} />
     </>
   );
 };

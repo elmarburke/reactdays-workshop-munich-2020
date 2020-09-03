@@ -14,7 +14,11 @@ interface MessagesFetchSucceeded {
   messages: readonly Message[];
 }
 
-export type AppAction = AddMessage | MessagesFetchSucceeded;
+interface ClearMessages {
+  type: "CLEAR_MESSAGE_LIST";
+}
+
+export type AppAction = AddMessage | MessagesFetchSucceeded | ClearMessages;
 
 const initialState: AppState = {
   messageList: [],
@@ -35,6 +39,13 @@ function appReducer(
     return {
       ...state,
       messageList: [...state.messageList, ...action.messages],
+    };
+  }
+
+  if (action.type === "CLEAR_MESSAGE_LIST") {
+    return {
+      ...state,
+      messageList: [],
     };
   }
 

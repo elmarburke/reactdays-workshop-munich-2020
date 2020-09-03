@@ -21,6 +21,10 @@ const useMessages = () => {
     [dispatch]
   );
 
+  const clearMessage = React.useCallback(() => {
+    dispatch({ type: "CLEAR_MESSAGE_LIST" });
+  }, [dispatch]);
+
   React.useEffect(() => {
     const controller = new AbortController();
 
@@ -35,7 +39,7 @@ const useMessages = () => {
     };
   }, [dispatch]);
 
-  return { messages, addMessage };
+  return { messages, addMessage, clearMessage };
 };
 
 export default useMessages;
