@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessageView /> shows the message 1`] = `
+<article
+  class="sc-AxjAm dcMTwH"
+>
+  Hello World
+  <footer>
+    Hans Wurst
+  </footer>
+</article>
+`;
