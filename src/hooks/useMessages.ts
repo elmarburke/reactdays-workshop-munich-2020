@@ -1,32 +1,39 @@
 import React from "react";
+import { Dispatch } from "redux";
 import { useSelector, useDispatch } from "react-redux";
-import { AppState } from "../reducers/appReducer";
+import { AppState, AppAction } from "../reducers/appReducer";
 import { Message } from "../domain";
+
+const useMyDispatch = () => {
+  return useDispatch<Dispatch<AppAction>>();
+};
 
 const useMessages = () => {
   const messages = useSelector<AppState, readonly Message[]>(
     (state) => state.messageList
   );
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
-  // const [messages, setMessage] = React.useState<readonly Message[]>([]);
+  const addMessage = React.useCallback(
+    (message: Message): void => {
+      dispatch({ type: "ADD_MESSAGE", message });
+    },
+    [dispatch]
+  );
 
-  // React.useEffect(() => {
-  //   const controller = new AbortController();
+  React.useEffect(() => {
+    const controller = new AbortController();
 
-  //   fetch("/messages.json", { signal: controller.signal })
-  //     .then((res) => res.json())
-  //     .then((data) => setMessage(data));
+    fetch("/messages.json", { signal: controller.signal })
+      .then((res) => res.json())
+      .then((messages) =>
+        dispatch({ type: "FETCH_MESSAGES_SUCCEED", messages })
+      );
 
-  //   return () => {
-  //     controller.abort();
-  //   };
-  // }, []);
-
-  const addMessage = (message: Message): void => {
-    dispatch({ type: "ADD_MESSAGE", message });
-    // setMessage([...messages, message]);
-  };
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch]);
 
   return { messages, addMessage };
 };

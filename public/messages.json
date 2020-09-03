@@ -4,5 +4,11 @@
     "message": "baz",
     "author": "Elmar",
     "date": 1570699374935
+  },
+  {
+    "id": "0815",
+    "message": "Hallo React mit Redux!",
+    "author": "Christian",
+    "date": 1570699374936
   }
 ]
