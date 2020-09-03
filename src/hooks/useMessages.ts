@@ -1,45 +1,24 @@
 import React from "react";
-import { Dispatch } from "redux";
-import { useSelector, useDispatch } from "react-redux";
-import { AppState, AppAction } from "../reducers/appReducer";
-import { Message } from "../domain";
-
-const useMyDispatch = () => {
-  return useDispatch<Dispatch<AppAction>>();
-};
+import {
+  Message,
+  useMessagesQuery,
+  useSendMessageMutation,
+} from "../generated/graphql";
 
 const useMessages = () => {
-  const messages = useSelector<AppState, readonly Message[]>(
-    (state) => state.messageList
-  );
-  const dispatch = useMyDispatch();
+  const { data } = useMessagesQuery();
+  const [sendMessage] = useSendMessageMutation();
 
   const addMessage = React.useCallback(
     (message: Message): void => {
-      dispatch({ type: "ADD_MESSAGE", message });
+      sendMessage({
+        variables: { author: message.author, text: message.text },
+      });
     },
-    [dispatch]
+    [sendMessage]
   );
 
-  const clearMessage = React.useCallback(() => {
-    dispatch({ type: "CLEAR_MESSAGE_LIST" });
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    const controller = new AbortController();
-
-    fetch("/messages.json", { signal: controller.signal })
-      .then((res) => res.json())
-      .then((messages) =>
-        dispatch({ type: "FETCH_MESSAGES_SUCCEED", messages })
-      );
-
-    return () => {
-      controller.abort();
-    };
-  }, [dispatch]);
-
-  return { messages, addMessage, clearMessage };
+  return { messages: data || [], addMessage, clearMessage: () => {} };
 };
 
 export default useMessages;

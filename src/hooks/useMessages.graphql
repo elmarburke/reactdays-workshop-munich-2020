@@ -1,0 +1,15 @@
+query Messages {
+  messages {
+    id
+    text
+    author
+  }
+}
+
+mutation SendMessage($text: String!, $author: String!) {
+  sendMessage(input: { text: $text, author: $author }) {
+    id
+    text
+    author
+  }
+}
