@@ -1,6 +1,21 @@
-const initialState = {};
+// import { Message } from "../domain";
 
-function appReducer(state = initialState, action: any) {
+interface AppState {
+  readonly messageList: readonly string[];
+}
+
+const initialState: AppState = {
+  messageList: [],
+};
+
+function appReducer(state: AppState = initialState, action: any): AppState {
+  if (action.type === "ADD_MESSAGE") {
+    return {
+      ...state,
+      messageList: [...state.messageList, action.text],
+    };
+  }
+
   return state;
 }
 
