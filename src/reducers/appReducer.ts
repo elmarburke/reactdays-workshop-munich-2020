@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Message } from "../domain";
 
 export interface AppState {
@@ -25,11 +25,17 @@ const appSlice = createSlice({
   name: "app",
   initialState: initialState,
   reducers: {
-    addMessage(state, action) {
+    addMessage(state, action: PayloadAction<{ message: Message }>) {
       state.messageList.push(action.payload.message);
       return state;
     },
-    fetchMessagesSucceed(state, action) {
+    fetchMessages(state, action) {
+      return state;
+    },
+    fetchMessagesSucceed(
+      state,
+      action: PayloadAction<{ messages: readonly Message[] }>
+    ) {
       state.loading = false;
       state.messageList.push(...action.payload.messages);
       return state;

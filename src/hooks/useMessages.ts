@@ -21,7 +21,7 @@ const useMessages = () => {
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(fetchMessages());
+    dispatch(actions.fetchMessages({}));
   }, [dispatch]);
 
   return { messages, addMessage, clearMessage };

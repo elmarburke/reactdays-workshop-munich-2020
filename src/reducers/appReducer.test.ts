@@ -33,7 +33,7 @@ describe("appReducer()", () => {
 
   it("adds fetched messages", () => {
     const state = appReducer(
-      { messageList: [] },
+      { messageList: [], loading: true },
       actions.fetchMessagesSucceed({
         messages: [
           {
@@ -52,6 +52,7 @@ describe("appReducer()", () => {
       })
     );
     expect(state).toEqual({
+      loading: false,
       messageList: [
         {
           id: "1570699374935",

@@ -1,8 +1,11 @@
+import { Middleware } from "redux";
 import { configureStore as configureToolkitStore } from "@reduxjs/toolkit";
 import appReducer from "./reducers/appReducer";
+import apiMiddleware from "./middlewares/api-middleware";
 
-// @ts-ignore
-const thunkMiddleware = ({ dispatch, getState }) => (next) => (action) => {
+const thunkMiddleware: Middleware = ({ dispatch, getState }) => (next) => (
+  action
+) => {
   if (typeof action === "function") {
     console.log("found function");
     action(dispatch, getState);
@@ -17,8 +20,9 @@ const thunkMiddleware = ({ dispatch, getState }) => (next) => (action) => {
   next(action);
 };
 
-// @ts-ignore
-const loggingMiddleware = ({ dispatch, getState }) => (next) => (action) => {
+const loggingMiddleware: Middleware = ({ dispatch, getState }) => (next) => (
+  action
+) => {
   console.info("state before reducer", getState());
 
   next(action);
@@ -30,7 +34,7 @@ const loggingMiddleware = ({ dispatch, getState }) => (next) => (action) => {
 const configureStore = () => {
   return configureToolkitStore({
     reducer: appReducer,
-    middleware: [thunkMiddleware, loggingMiddleware],
+    middleware: [thunkMiddleware, loggingMiddleware, apiMiddleware],
   });
 };
 
