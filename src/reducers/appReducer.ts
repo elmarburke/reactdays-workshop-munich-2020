@@ -1,55 +1,50 @@
+import { createSlice } from "@reduxjs/toolkit";
 import { Message } from "../domain";
 
 export interface AppState {
+  loading: boolean;
   readonly messageList: readonly Message[];
 }
 
-interface AddMessage {
-  type: "ADD_MESSAGE";
-  message: Message;
-}
+export const fetchMessages = () => {
+  return (dispatch: any) => {
+    dispatch(actions.fetchMessagesStarted());
 
-interface MessagesFetchSucceeded {
-  type: "FETCH_MESSAGES_SUCCEED";
-  messages: readonly Message[];
-}
-
-interface ClearMessages {
-  type: "CLEAR_MESSAGE_LIST";
-}
-
-export type AppAction = AddMessage | MessagesFetchSucceeded | ClearMessages;
+    fetch("/messages.json")
+      .then((res) => res.json())
+      .then((messages) => dispatch(actions.fetchMessagesSucceed({ messages })));
+  };
+};
 
 const initialState: AppState = {
+  loading: false,
   messageList: [],
 };
 
-function appReducer(
-  state: AppState = initialState,
-  action: AppAction
-): AppState {
-  if (action.type === "ADD_MESSAGE") {
-    return {
-      ...state,
-      messageList: [...state.messageList, action.message],
-    };
-  }
+const appSlice = createSlice({
+  name: "app",
+  initialState: initialState,
+  reducers: {
+    addMessage(state, action) {
+      state.messageList.push(action.payload.message);
+      return state;
+    },
+    fetchMessagesSucceed(state, action) {
+      state.loading = false;
+      state.messageList.push(...action.payload.messages);
+      return state;
+    },
+    clearMessageList(state) {
+      state.messageList = [];
+      return state;
+    },
+    fetchMessagesStarted(state) {
+      state.loading = true;
+      return state;
+    },
+  },
+});
 
-  if (action.type === "FETCH_MESSAGES_SUCCEED") {
-    return {
-      ...state,
-      messageList: [...state.messageList, ...action.messages],
-    };
-  }
+export const actions = appSlice.actions;
 
-  if (action.type === "CLEAR_MESSAGE_LIST") {
-    return {
-      ...state,
-      messageList: [],
-    };
-  }
-
-  return state;
-}
-
-export default appReducer;
+export default appSlice.reducer;
